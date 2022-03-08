@@ -59,7 +59,7 @@ block content
             #map(class="shadow-lg border-none outline-none mt-8 w-full h-[21rem]" data-start-location=`${JSON.stringify(tour.startLocation)}`)
 
   div(class="wrapper")
-    if booking
+    if !booking
       section(class="relative max-w-3xl px-8 py-10 mx-auto rounded-lg shadow-lg mt-14")
         div(class="absolute flex p-2 overflow-hidden rounded-full -top-1/4 left-2/4 -translate-x-2/4 translate-y-1/4")
           div(class="absolute top-0 left-0 w-full h-full bg-gradient")
