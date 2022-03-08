@@ -1,0 +1,28 @@
+//!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+doctype html
+html(class="font-mono selection:text-white selection:bg-blue-400" lang="en")
+
+  head
+    block head
+      meta(charset="UTF-8")
+      meta(http-equiv="X-UA-Compatible" content="IE=edge")
+      meta(name="viewport" content="width=device-width, initial-scale=1.0")
+      meta(data-page=`${page}`)
+      meta(data-user=`${user ? "in" : "out"}`)
+      link(rel="icon" size="32x32" type="image/png" href="/img/favicon.png?v=1.1")
+      title Tourist | #{title}
+
+  body(class="text-neutral-500 min-w-[1000px] bg-neutral-100 border-t-secondary border-t-8 border-solid grid grid-rows-[auto_1fr_auto] min-h-screen")
+    // Header
+    include ./layout/_header
+
+    // Content
+    block content
+
+    // Footer
+    include ./layout/_footer
+
+    script(src="/dist/index.bundle.js")

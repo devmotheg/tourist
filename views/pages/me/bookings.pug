@@ -1,0 +1,27 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../me
+
+block user-content
+  div(class="flex flex-wrap gap-12 booking-section justify-evenly")
+    each booking in bookings
+      - const tour = booking.tourId;
+      div(class="relative p-4 w-[15rem]")
+        a(class="absolute top-px left-px group btn" href=`/tour/${tour.slug}`)
+          svg(class="w-6 h-6 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-info")
+        if !booking.paid
+          button(class="absolute del-booking top-px right-px group btn" data-booking-id=`${booking._u}`)
+            svg(class="w-6 h-6 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-trash-2")
+        div(class="mx-auto mb-4 rounded-full outline outline-4 outline-neutral-600 w-fit h-fit")
+          img(class="w-20 h-20 rounded-full shadow-lg shadow-black/40" src=`/img/tours/${tour.coverImage}`)
+        span(class="block mb-8 text-xl font-bold text-center uppercase")=tour.name
+        span(class="relative block mx-auto my-8 text-5xl font-bold text-center w-fit text-neutral-600")=tour.price
+          svg(class="absolute w-8 h-8 -top-2 fill-neutral-600 -left-8"): use(xlink:href="/img/icons.svg#icon-dollar-sign")
+        if booking.paid
+          div(class="w-12 h-12 p-2 mx-auto rounded-full outline-4 outline-neutral-600 outline")
+            svg(class="w-full h-full fill-neutral-600"): use(xlink:href="/img/icons.svg#icon-check")
+        else
+          div(class="px-8 py-3 rounded-md shadow-lg bg-neutral-600 shadow-black/40")
+            button(class="block mx-auto font-bold text-white uppercase pay-booking btn w-fit" data-booking-id=`${booking._u}`) confirm and pay

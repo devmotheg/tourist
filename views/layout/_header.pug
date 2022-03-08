@@ -1,0 +1,19 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+header(class="wrapper")
+  nav(class="flex items-center justify-between gap-6")
+    img(class="w-14 h-fit" src="/img/logo.png" alt="Logo")
+    div(class="flex items-center justify-between flex-1 gap-6")
+      div(class="flex items-center gap-6")
+        a(class="capitalize btn" href="/") all tours
+      div(class="flex items-center gap-6")
+        if user
+          a(class="flex items-center gap-4 capitalize btn" href="/me/settings")
+            img(class="w-10 h-10 rounded-full shadow-md shadow-black/40" src=`/img/users/${user.photo}` alt=`${user.name} photo`)
+            span=user.name.split(" ")[0]
+          button(class="capitalize sign-out btn") sign out
+        else
+          a(class="capitalize btn" href="/sign-in") sign in
+          a(class="capitalize btn" href="/sign-up") sign up

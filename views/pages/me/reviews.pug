@@ -1,0 +1,22 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../me
+
+block user-content
+  div(class="w-full space-y-8 review-section")
+    each review in reviews
+      div(class="relative w-full px-4 before:absolute before:h-full before:w-1 before:bg-secondary before:top-0 before:left-0")
+        div(class="flex items-center justify-between gap-20 mb-4")
+          a(class="block text-xl font-bold uppercase w-fit btn" href=`/tour/${review.tourId.slug}`)=review.tourId.name
+          div(class="flex items-center gap-4 top-px right-px")
+            a(class="btn group" href=`/tour/${review.tourId.slug}/update-review/${review._u}`)
+              svg(class="w-5 h-5 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-edit-2")
+            button(class="del-review btn group" data-review-id=`${review._u}`)
+              svg(class="w-5 h-5 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-trash-2")
+        div(class="flex gap-2 mb-4")
+          each star in [1, 2, 3, 4, 5]
+            svg(class=`w-4 h-4 ${star <= review.rating ? "fill-secondary" : "fill-neutral-500"}`)
+              use(xlink:href="/img/icons.svg#icon-star")
+        p(class="text-lg break-all whitespace-pre")=review.comment

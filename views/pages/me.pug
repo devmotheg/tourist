@@ -1,0 +1,22 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../index
+
+mixin list-item(link, text, icon)
+  li(class=`border-l-4 border-solid my-6 border-l-white ${active === text ? "translate-x-0" : "-translate-x-2"} transition hover:translate-x-0`)
+    a(class="flex items-center gap-4 py-2 pl-8 pr-20 uppercase" href=`${link}`)
+      svg(class="w-5 h-5 fill-white"): use(xlink:href=`/img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  div(class="h-full wrapper")
+    div(class="grid [grid-template-columns:_auto_1fr] shadow-lg overflow-hidden rounded-lg h-full")
+      aside(class="relative py-4 text-white bg-gradient-to-tr from-primary to-secondary")
+        ul(class="relative z-10")
+          +list-item("/me/settings", "settings", "settings")
+          +list-item("/me/reviews", "reviews", "star")
+          +list-item("/me/bookings", "bookings", "briefcase")
+      div(class="p-8 bg-white")
+        block user-content

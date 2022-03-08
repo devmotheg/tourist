@@ -1,0 +1,24 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../index
+
+block content
+  div(class="grid grid-cols-[1fr_auto] gap-8 wrapper h-full items-center")
+    div(class="w-full h-full")
+      div(class="flex gap-4 mb-4 review-stars")
+        -
+          const starColor = (star) => {
+            if (!review) return "fill-neutral-500";
+            return star <= review.rating ? "fill-secondary" : "fill-neutral-500";
+          }
+        each star in [1, 2, 3, 4, 5]
+          button(class="star btn group")
+            svg(class=`transition w-6 h-6 group-hover:fill-primary ${starColor(star)}`)
+              use(xlink:href="/img/icons.svg#icon-star")
+      textarea(class="w-full h-full p-6 mx-auto text-3xl rounded-lg shadow-lg outline-none resize-none placeholder:text-neutral-500 text-neutral-600" placeholder="Write your review here...") #{review ? review.comment : ""}
+    div
+      button(class="send group btn" data-id=`${review ? review._u : ""}` data-tour-id=`${tour._u}` data-slug=`${tour.slug}`)
+        svg(class="w-20 h-20 transition group-hover:fill-primary fill-neutral-600"): use(xlink:href="/img/icons.svg#icon-send")
+

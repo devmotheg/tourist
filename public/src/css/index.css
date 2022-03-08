@@ -1,0 +1,37 @@
+/*!
+ * @author Mohamed Muntasir
+ * @link https://github.com/devmotheg
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer base {
+	button:disabled {
+		@apply cursor-not-allowed;
+	}
+}
+
+@layer components {
+	.wrapper {
+		@apply self-center max-w-7xl w-[95%] p-8 mx-auto;
+	}
+
+	.btn {
+		@apply font-bold transition hover:text-primary hover:border-primary hover:-translate-y-1;
+	}
+
+	.btn-underline {
+		@apply pb-2 border-b-neutral-500 border-b-[0.15rem] border-solid p-2 active:bg-primary active:text-white active:border-primary;
+	}
+
+	.bg-gradient {
+		@apply after:absolute after:top-0 after:left-0 after:h-full after:w-full z-10 after:bg-gradient-to-tr after:from-primary after:to-secondary after:opacity-70;
+	}
+
+	.special-heading {
+		@apply block font-bold text-transparent uppercase bg-gradient-to-tr from-primary to-secondary bg-clip-text;
+	}
+}

@@ -1,0 +1,30 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../index
+
+mixin card-data(icon, data)
+  div(class="flex items-center gap-2")
+    svg(class="w-5 h-5 fill-secondary"): use(xlink:href=`/img/icons.svg#icon-${icon}`)
+    span=data
+
+block content
+  div(class="wrapper")
+    div(class="flex flex-wrap gap-12 justify-evenly")
+      each tour in tours
+        div(class="bg-white tranition rounded-lg shadow-lg w-[20rem] overflow-hidden")
+          div(class="relative")
+            div(class="h-[12rem] overflow-hidden bg-gradient")
+              img(src=`/img/tours/${tour.coverImage}` alt=`${tour.name}'s cover image`)
+            p(class="absolute text-3xl font-bold text-center text-white uppercase top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4")=tour.name
+          div(class="grid gap-3 p-4 text-sm")
+            p(class="font-bold uppercase")=`${tour.difficulty} ${tour.duration}-day tour`
+            p(class="h-[4rem] flex items-center")=tour.summary
+            +card-data("user", `${tour.maxGroupSize} people`)
+            +card-data("calendar", new Date(Date.now()).toLocaleString("en-us", { month: "long", year: "numeric" }))
+            +card-data("map-pin", tour.startLocation.description)
+            +card-data("star", `${tour.ratingsAverage}/5 (${tour.ratingsQuantity} rating(s))`)
+            +card-data("dollar-sign", `${tour.price} per person`)
+          div(class="py-4 bg-neutral-700")
+            a(class="block mx-auto text-white capitalize btn w-fit" href=`/tour/${tour.slug}`) details

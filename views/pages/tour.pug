@@ -1,0 +1,95 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../index
+
+mixin data-box(icon, data)
+  div(class="flex items-center gap-2 mt-12 text-xl")
+    svg(class="w-6 h-6 fill-white"): use(xlink:href=`/img/icons.svg#icon-${icon}`)
+    span=data
+
+mixin quick-fact(label, value, icon)
+  div(class="flex items-center gap-2")
+    svg(class="w-5 h-5 fill-secondary"): use(xlink:href=`/img/icons.svg#icon-${icon}`)
+    span(class="font-bold uppercase")=label
+    span(class=`${label === "difficulty:" ? "capitalize" : ""}`)=value
+
+block append head
+  link(href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" crossorigin)
+  script(src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js" crossorigin)
+
+block content
+  section(class="relative flex flex-col justify-center min-h-screen")
+    div(class="absolute top-0 left-0 w-full h-full overflow-hidden bg-gradient")
+      img(class="min-h-screen min-w-[100vw]" src=`/img/tours/${tour.coverImage}` alt=`${tour.name} cover image`)
+    h1(class="relative z-10 text-6xl font-bold text-center text-white uppercase")=tour.name
+    div(class="relative z-10 flex items-center justify-center gap-8 text-white uppercase")
+      +data-box("clock", `${tour.duration} days`)
+      +data-box("map-pin", tour.startLocation.description)
+
+  section(class="p-6")
+    div(class="wrapper")
+      div(class="grid grid-cols-2")
+        div(class="grid gap-12")
+          div
+            h2(class="px-4 pb-8 mx-auto mb-8 text-3xl text-center border-b-2 border-solid special-heading border-secondary w-fit") quick facts
+            - const date = new Date(Date.now()).toLocaleString("en-us", { month: "long", year: "numeric" });
+            div(class="grid justify-center gap-y-6")
+              +quick-fact("next date:", date, "calendar")
+              +quick-fact("difficulty:", tour.difficulty, "trending-up")
+              +quick-fact("participants:", `${tour.maxGroupSize} people`, "user")
+              +quick-fact("rating:", `${tour.ratingsAverage}/5 (${tour.ratingsQuantity} rating(s))`, "star")
+          div
+            h2(class="px-4 pb-8 mx-auto mb-8 text-3xl text-center border-b-2 border-solid special-heading border-secondary w-fit") your tour guides
+            div(class="grid justify-center gap-y-6")
+              each guide in tour.guidesIds
+                div(class="flex items-center gap-4")
+                  img(class="w-10 h-10 rounded-full shadow-md shadow-black/40" src=`/img/users/${guide.photo}`, alt=`${guide.name} photo`)
+                  div(class="flex gap-2")
+                    - if (guide.role === "lead-guide")
+                      span(class="font-bold uppercase") lead guide:
+                    - if (guide.role === "guide")
+                      span(class="font-bold uppercase") tour guide:
+                    span=guide.name
+        div
+          div
+            h2(class="px-4 pb-8 mx-auto mb-8 text-3xl text-center border-b-2 border-solid special-heading border-secondary w-fit")=`about the ${tour.name} tour location`
+            p.about__text=tour.description
+            #map(class="shadow-lg border-none outline-none mt-8 w-full h-[21rem]" data-start-location=`${JSON.stringify(tour.startLocation)}`)
+
+  div(class="wrapper")
+    section(class="relative max-w-3xl px-8 py-10 mx-auto rounded-lg shadow-lg mt-14")
+      div(class="absolute flex p-2 overflow-hidden rounded-full -top-1/4 left-2/4 -translate-x-2/4 translate-y-1/4")
+        div(class="absolute top-0 left-0 w-full h-full bg-gradient")
+          img(class="w-full h-full" src=`/img/tours/${tour.coverImage}` alt=`${tour.name} cover image`)
+        img(class="z-10 w-14 h-14" src="/img/logo-white.png" alt="Logo")
+      div(class="grid gap-6 text-center")
+        h2(class="text-2xl special-heading") what are you waiting for?
+        p(class="text-lg font-bold uppercase")=`${tour.duration} days. 1 adventure. infinite memories. make it yours!`
+        if user
+          button(class="book-tour p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500", data-tour-id=`${tour._u}`) book this tour
+        else
+          a(class="p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500" href="/sign-in") sign in to book this tour
+
+    div(class="grid max-w-3xl gap-6 pb-2 mx-auto review-section mt-14")
+      if user
+        a(class="mx-auto btn btn-underline w-fit" href=`/tour/${tour.slug}/create-review`) Write a Review
+      each review in tour.reviews
+        div(class="grid gap-4 p-4 border-t-4 border-solid rounded-md border-secondary")
+          div(class="flex items-center justify-between gap-20")
+            div(class="flex items-center gap-4")
+              img(class="w-10 h-10 rounded-full shadow-md shadow-black/40" src=`/img/users/${review.userId.photo}` alt=`${review.userId.name} photo`)
+              span(class="font-bold")=review.userId.name
+            if (user && user.email === review.userId.email)
+              div(class="flex items-center gap-4 top-px right-px")
+                a(class="btn group" href=`/tour/${review.tourId.slug}/update-review/${review._u}`)
+                  svg(class="w-5 h-5 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-edit-2")
+                button(class="del-review btn group" data-review-id=`${review._u}`)
+                  svg(class="w-5 h-5 transition fill-neutral-600 group-hover:fill-primary"): use(xlink:href="/img/icons.svg#icon-trash-2")
+          div(class="flex gap-2")
+            each star in [1, 2, 3, 4, 5]
+              svg(class=`w-4 h-4 ${star <= review.rating ? "fill-secondary" : "fill-neutral-500"}`)
+                use(xlink:href="/img/icons.svg#icon-star")
+          div
+            p(class="break-all whitespace-pre")=review.comment

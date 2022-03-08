@@ -1,0 +1,40 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../me
+
+include ../../helpers/_mixins
+
+block user-content
+  form(class="max-w-[44rem] mx-auto p-10" novalidate spellcheck="false")
+    strong(class="mb-6 text-2xl special-heading") your account information
+    div(class="mb-6")
+      +form-label("current-password-info", "current password")
+      +form-input("current-password-info", "password", "••••••••", "currentPassword")
+    div(class="mb-6")
+      +form-label("name", "full name")
+      +form-input("name", "text", "John Doe", "name", user.name)
+    div(class="mb-6")
+      +form-label("email", "email address")
+      +form-input("email", "email", "you@example.com", "email", user.email)
+    div(class="flex items-center gap-4 mb-8")
+      img(class="w-12 h-12 rounded-full shadow-md shadow-black/40" src=`/img/users/${user.photo}`, alt=`${user.name} photo`)
+      label(class="block text-sm uppercase cursor-pointer btn btn-underline" for="file") choose new photo
+      input#file(class="hidden" type="file" name="photo" accept="image/*")
+    div(class="flex")
+      button(class="account-info py-2 px-8 ml-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500") save information
+
+  form(class="max-w-[44rem] mx-auto p-10" novalidate spellcheck="false")
+    strong(class="mb-6 text-2xl special-heading") password change
+    div(class="mb-6")
+      +form-label("current-password-change", "current password")
+      +form-input("current-password-change", "password", "••••••••", "currentPassword")
+    div(class="mb-6")
+      +form-label("new-password", "new password")
+      +form-input("new-password", "password", "••••••••", "newPassword")
+    div(class="mb-8")
+      +form-label("new-password-confirm", "confirm new password")
+      +form-input("new-password-confirm", "password", "••••••••", "newPasswordConfirm")
+    div(class="flex")
+      button(class="pass-change py-2 px-8 ml-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500") save password

@@ -1,0 +1,21 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends base
+
+block content
+  h1 Welcome to Tourist!
+  p=`Hi, ${toName}`
+  p You successfully signed up, make sure to visit your settings page to customize your profile as much as you want!
+  table.btn.btn--primary(role="presentation", border="0", cellpadding="0", cellspacing="0")
+    tbody
+      tr
+        td(align="left")
+          table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target="_blank") CHANGE SETTINGS
+  p If you faced any difficulties while manging your account or bookings, feel free to contact our customer service.
+  p - Mohamed Muntasir, CEO

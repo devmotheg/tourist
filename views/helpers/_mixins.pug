@@ -1,0 +1,9 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+mixin form-label(id, text)
+  label(class="block mb-4 text-lg font-bold capitalize text-neutral-600" for=`${id}`)=text
+
+mixin form-input(id, type, placeholder, name, value)
+  input(id=`${id}` class="w-full px-6 py-4 transition border-transparent border-solid rounded-md outline-none border-b-[0.2rem] placeholder:text-neutral-500 bg-slate-100 text-neutral-600" type=`${type}` placeholder=`${placeholder}` name=`${name}` value=`${value ? value : ""}`)

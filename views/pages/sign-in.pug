@@ -1,0 +1,21 @@
+//-!
+  @author Mohamed Muntasir
+  @link https://github.com/devmotheg
+
+extends ../index
+
+include ../helpers/_mixins
+
+block content
+  div(class="wrapper")
+    form(class="max-w-[44rem] mx-auto p-10 rounded-lg shadow-lg bg-white" novalidate spellcheck="false")
+      strong(class="mb-6 text-2xl special-heading") sign into your account
+      div(class="mb-6")
+        +form-label("email", "email address")
+        +form-input("email", "email", "you@example.com", "email")
+      div(class="mb-8")
+        +form-label("password", "password")
+        +form-input("password", "password", "••••••••", "password")
+        a(class="block mt-4 text-sm uppercase btn btn-underline w-fit" href="/forgot-password") forgot password
+      div
+        button(class="py-2 px-8 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500") sign in
