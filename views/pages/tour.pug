@@ -59,18 +59,19 @@ block content
             #map(class="shadow-lg border-none outline-none mt-8 w-full h-[21rem]" data-start-location=`${JSON.stringify(tour.startLocation)}`)
 
   div(class="wrapper")
-    section(class="relative max-w-3xl px-8 py-10 mx-auto rounded-lg shadow-lg mt-14")
-      div(class="absolute flex p-2 overflow-hidden rounded-full -top-1/4 left-2/4 -translate-x-2/4 translate-y-1/4")
-        div(class="absolute top-0 left-0 w-full h-full bg-gradient")
-          img(class="w-full h-full" src=`/img/tours/${tour.coverImage}` alt=`${tour.name} cover image`)
-        img(class="z-10 w-14 h-14" src="/img/logo-white.png" alt="Logo")
-      div(class="grid gap-6 text-center")
-        h2(class="text-2xl special-heading") what are you waiting for?
-        p(class="text-lg font-bold uppercase")=`${tour.duration} days. 1 adventure. infinite memories. make it yours!`
-        if user
-          button(class="book-tour p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500", data-tour-id=`${tour._u}`) book this tour
-        else
-          a(class="p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500" href="/sign-in") sign in to book this tour
+    if booking
+      section(class="relative max-w-3xl px-8 py-10 mx-auto rounded-lg shadow-lg mt-14")
+        div(class="absolute flex p-2 overflow-hidden rounded-full -top-1/4 left-2/4 -translate-x-2/4 translate-y-1/4")
+          div(class="absolute top-0 left-0 w-full h-full bg-gradient")
+            img(class="w-full h-full" src=`/img/tours/${tour.coverImage}` alt=`${tour.name} cover image`)
+          img(class="z-10 w-14 h-14" src="/img/logo-white.png" alt="Logo")
+        div(class="grid gap-6 text-center")
+          h2(class="text-2xl special-heading") what are you waiting for?
+          p(class="text-lg font-bold uppercase")=`${tour.duration} days. 1 adventure. infinite memories. make it yours!`
+          if user
+            button(class="book-tour p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500", data-tour-id=`${tour._u}`) book this tour
+          else
+            a(class="p-3 mx-auto uppercase border-[0.15rem] border-solid rounded-full w-fit btn border-neutral-500" href="/sign-in") sign in to book this tour
 
     div(class="grid max-w-3xl gap-6 pb-2 mx-auto review-section mt-14")
       if user
