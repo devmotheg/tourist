@@ -14,13 +14,19 @@ router.use(authController.firewall({ protect: true }));
 
 router
 	.route("/me")
-	.post(bookingController.passFilteredBody, bookingController.meCreateBooking)
+	.post(
+		authController.restrictTo("user"),
+		bookingController.passFilteredBody,
+		bookingController.meCreateBooking
+	)
 	.patch(
+		authController.restrictTo("user"),
 		bookingController.passFilteredBody,
 		bookingController.freezePaidBooking,
 		bookingController.meUpdateBooking
 	)
 	.delete(
+		authController.restrictTo("user"),
 		bookingController.freezePaidBooking,
 		bookingController.meDeleteBooking
 	);

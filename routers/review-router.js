@@ -15,20 +15,17 @@ router.use(authController.firewall({ protect: true }));
 router
 	.route("/me")
 	.post(
-		router.use(authController.restrictTo("user")),
+		authController.restrictTo("user"),
 		reviewController.passFilteredBody,
 		reviewController.preventInvalidReview,
 		reviewController.meCreateReview
 	)
 	.patch(
-		router.use(authController.restrictTo("user")),
+		authController.restrictTo("user"),
 		reviewController.passFilteredBody,
 		reviewController.meUpdateReview
 	)
-	.delete(
-		router.use(authController.restrictTo("user")),
-		reviewController.meDeleteReview
-	);
+	.delete(authController.restrictTo("user"), reviewController.meDeleteReview);
 
 router.use(authController.restrictTo("admin"));
 
