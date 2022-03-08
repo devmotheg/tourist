@@ -16,12 +16,12 @@ router
 	.route("/me")
 	.post(
 		authController.restrictTo("user"),
-		bookingController.passFilteredBody,
+		bookingController.passFilteredBody("create"),
 		bookingController.meCreateBooking
 	)
 	.patch(
 		authController.restrictTo("user"),
-		bookingController.passFilteredBody,
+		bookingController.passFilteredBody("update"),
 		bookingController.freezePaidBooking,
 		bookingController.meUpdateBooking
 	)

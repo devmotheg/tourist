@@ -27,8 +27,11 @@ exports.renderTour = catchAsync(async (req, res, next) => {
 	if (!tour) return next(new AppError("This tour doesn't exist", 404));
 
 	let booking;
-	if (req.user)
-		booking = await Booking.findOne({ userId: req.user.id, tourId: tour.id });
+	if (res.locals.user)
+		booking = await Booking.findOne({
+			userId: res.locals.user.id,
+			tourId: tour.id,
+		});
 
 	res.status(200).render("pages/tour", {
 		title: `${tour.name} Tour`,

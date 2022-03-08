@@ -11,15 +11,19 @@ const Booking = require("../models/booking-model"),
 
 const useFactory = action => handlerFactory[action](Booking, "booking");
 
-exports.passFilteredBody = catchAsync(async (req, res, next) => {
-	req.tour = await Tour.findOne({ _u: req.body.tourId });
-	req.filteredBody = {
-		paid: req.body.paid,
-		price: req.tour ? req.tour.price : null,
-	};
+exports.passFilteredBody = type =>
+	catchAsync(async (req, res, next) => {
+		req.filteredBody = {};
 
-	next();
-});
+		if (type === "create") {
+			req.tour = await Tour.findOne({ _u: req.body.tourId });
+			req.filteredBody["price"] = req.tour ? req.tour.price : null;
+		}
+
+		if (type === "update") req.filteredBody["paid"] = req.body.paid;
+
+		next();
+	});
 
 exports.freezePaidBooking = catchAsync(async (req, res, next) => {
 	const booking = await Booking.findOne({ _u: req.body.id });
